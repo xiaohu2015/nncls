@@ -1,6 +1,7 @@
 from dataclasses import dataclass, fields
 from enum import Enum
 from typing import Any, Callable, Dict
+from collections import OrderedDict
 
 from ..utils import load_state_dict_from_url
 
