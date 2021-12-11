@@ -226,6 +226,8 @@ def main(args):
 
     print("Creating model")
     
+    if args.pretrained and args.weights is None:
+        args.weights = get_weight(args.model, "ImageNet1K_V1")
     model = get_model(args.model)(weights=args.weights, num_classes=num_classes)
     model.to(device)
 
