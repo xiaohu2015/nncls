@@ -5,7 +5,7 @@ MODELS = Registry("MODEL")
 WEIGHTS = Registry("WEIGHT")
 
 
-def build_model(model_name):
+def get_model(model_name):
     return MODELS.get(model_name)
   
 
