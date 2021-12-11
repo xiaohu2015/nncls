@@ -7,8 +7,8 @@ from torchvision.transforms.functional import InterpolationMode
 
 from .build import MODELS, WEIGHTS
 from ..utils import _log_api_usage_once
-from ..data.transforms.presets import ClassificationPresetEval
-from .weight import WeightsEnum, Weights
+from ..data.transforms.presets import ClassificationPresetEval as ImageNetEval
+from ._weight import WeightsEnum, Weights
 from ..data._meta import _IMAGENET_CATEGORIES
 
 
@@ -301,7 +301,7 @@ def _resnet(
 _COMMON_META = {"size": (224, 224), "categories": _IMAGENET_CATEGORIES, "num_classes": 1000, "interpolation": InterpolationMode.BILINEAR}
 
 
-@WEIGHTS.registry(name='resnet18_weights')
+@WEIGHTS.register(name='resnet18_weights')
 class ResNet18_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnet18-f37072fd.pth",
@@ -316,7 +316,7 @@ class ResNet18_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
-@WEIGHTS.registry(name='resnet34_weights')
+@WEIGHTS.register(name='resnet34_weights')
 class ResNet34_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnet34-b627a593.pth",
@@ -331,7 +331,7 @@ class ResNet34_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
-@WEIGHTS.registry(name='resnet50_weights')
+@WEIGHTS.register(name='resnet50_weights')
 class ResNet50_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnet50-0676ba61.pth",
@@ -356,7 +356,7 @@ class ResNet50_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='resnet101_weights')
+@WEIGHTS.register(name='resnet101_weights')
 class ResNet101_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnet101-63fe2227.pth",
@@ -381,7 +381,7 @@ class ResNet101_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='resnet152_weights')
+@WEIGHTS.register(name='resnet152_weights')
 class ResNet152_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnet152-394f9c45.pth",
@@ -406,7 +406,7 @@ class ResNet152_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='resnet50_32x4d_weights')
+@WEIGHTS.register(name='resnet50_32x4d_weights')
 class ResNeXt50_32X4D_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnext50_32x4d-7cdf4587.pth",
@@ -431,7 +431,7 @@ class ResNeXt50_32X4D_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='resnet101_32x8d_weights')
+@WEIGHTS.register(name='resnet101_32x8d_weights')
 class ResNeXt101_32X8D_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/resnext101_32x8d-8ba56ff5.pth",
@@ -456,7 +456,7 @@ class ResNeXt101_32X8D_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='wide_resnet50_2_weights')
+@WEIGHTS.register(name='wide_resnet50_2_weights')
 class Wide_ResNet50_2_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/wide_resnet50_2-95faca4d.pth",
@@ -481,7 +481,7 @@ class Wide_ResNet50_2_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@WEIGHTS.registry(name='wide_resnet101_2_weights')
+@WEIGHTS.register(name='wide_resnet101_2_weights')
 class Wide_ResNet101_2_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/wide_resnet101_2-32ee1156.pth",
@@ -506,42 +506,42 @@ class Wide_ResNet101_2_Weights(WeightsEnum):
     default = ImageNet1K_V2
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnet18(*, weights: Optional[ResNet18_Weights] = None, progress: bool = True, **kwargs: Any) -> ResNet:
     weights = ResNet18_Weights.verify(weights)
 
     return _resnet(BasicBlock, [2, 2, 2, 2], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnet34(*, weights: Optional[ResNet34_Weights] = None, progress: bool = True, **kwargs: Any) -> ResNet:
     weights = ResNet34_Weights.verify(weights)
 
     return _resnet(BasicBlock, [3, 4, 6, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnet50(*, weights: Optional[ResNet50_Weights] = None, progress: bool = True, **kwargs: Any) -> ResNet:
     weights = ResNet50_Weights.verify(weights)
 
     return _resnet(Bottleneck, [3, 4, 6, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnet101(*, weights: Optional[ResNet101_Weights] = None, progress: bool = True, **kwargs: Any) -> ResNet:
     weights = ResNet101_Weights.verify(weights)
 
     return _resnet(Bottleneck, [3, 4, 23, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnet152(*, weights: Optional[ResNet152_Weights] = None, progress: bool = True, **kwargs: Any) -> ResNet:
     weights = ResNet152_Weights.verify(weights)
 
     return _resnet(Bottleneck, [3, 8, 36, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnext50_32x4d(
     *, weights: Optional[ResNeXt50_32X4D_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> ResNet:
@@ -552,7 +552,7 @@ def resnext50_32x4d(
     return _resnet(Bottleneck, [3, 4, 6, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def resnext101_32x8d(
     *, weights: Optional[ResNeXt101_32X8D_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> ResNet:
@@ -563,7 +563,7 @@ def resnext101_32x8d(
     return _resnet(Bottleneck, [3, 4, 23, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def wide_resnet50_2(
     *, weights: Optional[Wide_ResNet50_2_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> ResNet:
@@ -573,7 +573,7 @@ def wide_resnet50_2(
     return _resnet(Bottleneck, [3, 4, 6, 3], weights, progress, **kwargs)
 
 
-@MODELS.registry()
+@MODELS.register()
 def wide_resnet101_2(
     *, weights: Optional[Wide_ResNet101_2_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> ResNet:
