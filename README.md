@@ -8,6 +8,10 @@ A simple toolbox for image classification task on top of [torchvision](https://g
 train:
 
 ```
+# baseline
+torchrun --nproc_per_node=8 train.py --model resnet50
+
+# v2
 torchrun --nproc_per_node=8 train.py --model resnet50 --batch-size 128 --lr 0.5 \
 --lr-scheduler cosineannealinglr --lr-warmup-epochs 5 --lr-warmup-method linear \
 --auto-augment ta_wide --epochs 600 --random-erase 0.1 --weight-decay 0.00002 \
@@ -18,5 +22,5 @@ torchrun --nproc_per_node=8 train.py --model resnet50 --batch-size 128 --lr 0.5 
 eval:
 
 ```
-torchrun --nproc_per_node=8 train.py --model resnet50 --test-only --weights ImageNet1K_V2
+torchrun --nproc_per_node=8 train.py --model resnet50 --test-only --weights ImageNet1K_V1/ImageNet1K_V2
 ```
