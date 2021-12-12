@@ -16,7 +16,7 @@ from .weight import WeightsEnum, Weights
 from ..data._meta import _IMAGENET_CATEGORIES
 
 
- __all__ = [
+__all__ = [
     "EfficientNet",
     "EfficientNet_B0_Weights",
     "EfficientNet_B1_Weights",
