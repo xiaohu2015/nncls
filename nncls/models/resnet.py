@@ -9,7 +9,7 @@ from torchvision.transforms.functional import InterpolationMode
 from .build import MODELS, WEIGHTS
 from ..utils import _log_api_usage_once
 from ..data.transforms.presets import ClassificationPresetEval as ImageNetEval
-from ._weight import WeightsEnum, Weights
+from .weight import WeightsEnum, Weights
 from ..data._meta import _IMAGENET_CATEGORIES
 
 
