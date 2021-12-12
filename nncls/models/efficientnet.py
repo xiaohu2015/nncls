@@ -5,10 +5,15 @@ from typing import Any, Callable, Optional, List, Sequence
 
 import torch
 from torch import nn, Tensor
+from torchvision.transforms.functional import InterpolationMode
 
 from .layers import ConvNormActivation, SqueezeExcitation, StochasticDepth
 from ..utils import _log_api_usage_once
 from .utils import _make_divisible
+from .build import MODELS, WEIGHTS
+from ..data.transforms.presets import ClassificationPresetEval as ImageNetEval
+from .weight import WeightsEnum, Weights
+from ..data._meta import _IMAGENET_CATEGORIES
 
 
  __all__ = [
@@ -290,6 +295,7 @@ _COMMON_META = {
 }
 
 
+@WEIGHTS.register(name='efficientnet_b0_weights')
 class EfficientNet_B0_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b0_rwightman-3dd342df.pth",
@@ -304,6 +310,7 @@ class EfficientNet_B0_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b1_weights')
 class EfficientNet_B1_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b1_rwightman-533bc792.pth",
@@ -318,6 +325,7 @@ class EfficientNet_B1_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b2_weights')
 class EfficientNet_B2_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b2_rwightman-bcdf34b7.pth",
@@ -332,6 +340,7 @@ class EfficientNet_B2_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b3_weights')
 class EfficientNet_B3_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b3_rwightman-cf984f9c.pth",
@@ -346,6 +355,7 @@ class EfficientNet_B3_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b4_weights')
 class EfficientNet_B4_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b4_rwightman-7eb33cd5.pth",
@@ -360,6 +370,7 @@ class EfficientNet_B4_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b5_weights')
 class EfficientNet_B5_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b5_lukemelas-b6417697.pth",
@@ -374,6 +385,7 @@ class EfficientNet_B5_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b6_weights')
 class EfficientNet_B6_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b6_lukemelas-c76e70fd.pth",
@@ -388,6 +400,7 @@ class EfficientNet_B6_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
+@WEIGHTS.register(name='efficientnet_b7_weights')
 class EfficientNet_B7_Weights(WeightsEnum):
     ImageNet1K_V1 = Weights(
         url="https://download.pytorch.org/models/efficientnet_b7_lukemelas-dcc49843.pth",
@@ -402,7 +415,7 @@ class EfficientNet_B7_Weights(WeightsEnum):
     default = ImageNet1K_V1
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B0_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b0(
     *, weights: Optional[EfficientNet_B0_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -411,7 +424,7 @@ def efficientnet_b0(
     return _efficientnet(width_mult=1.0, depth_mult=1.0, dropout=0.2, weights=weights, progress=progress, **kwargs)
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B1_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b1(
     *, weights: Optional[EfficientNet_B1_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -420,7 +433,7 @@ def efficientnet_b1(
     return _efficientnet(width_mult=1.0, depth_mult=1.1, dropout=0.2, weights=weights, progress=progress, **kwargs)
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B2_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b2(
     *, weights: Optional[EfficientNet_B2_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -429,7 +442,7 @@ def efficientnet_b2(
     return _efficientnet(width_mult=1.1, depth_mult=1.2, dropout=0.3, weights=weights, progress=progress, **kwargs)
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B3_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b3(
     *, weights: Optional[EfficientNet_B3_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -438,7 +451,7 @@ def efficientnet_b3(
     return _efficientnet(width_mult=1.2, depth_mult=1.4, dropout=0.3, weights=weights, progress=progress, **kwargs)
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B4_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b4(
     *, weights: Optional[EfficientNet_B4_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -447,7 +460,7 @@ def efficientnet_b4(
     return _efficientnet(width_mult=1.4, depth_mult=1.8, dropout=0.4, weights=weights, progress=progress, **kwargs)
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B5_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b5(
     *, weights: Optional[EfficientNet_B5_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -464,7 +477,7 @@ def efficientnet_b5(
     )
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B6_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b6(
     *, weights: Optional[EfficientNet_B6_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
@@ -481,7 +494,7 @@ def efficientnet_b6(
     )
 
 
-@handle_legacy_interface(weights=("pretrained", EfficientNet_B7_Weights.ImageNet1K_V1))
+@MODELS.register()
 def efficientnet_b7(
     *, weights: Optional[EfficientNet_B7_Weights] = None, progress: bool = True, **kwargs: Any
 ) -> EfficientNet:
