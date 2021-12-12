@@ -24,3 +24,10 @@ eval:
 ```
 torchrun --nproc_per_node=8 train.py --model resnet50 --test-only --weights ImageNet1K_V1/ImageNet1K_V2
 ```
+
+### EfficientNet
+eval
+
+```
+torchrun --nproc_per_node=8 train.py --model efficientnet_b0 --test-only --weights ImageNet1K_V1
+```
