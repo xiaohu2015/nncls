@@ -14,4 +14,4 @@ def _make_divisible(v: float, divisor: int, min_value: Optional[int] = None) -> 
     # Make sure that round down does not go down by more than 10%.
     if new_v < 0.9 * v:
         new_v += divisor
-    return 
+    return new_v
