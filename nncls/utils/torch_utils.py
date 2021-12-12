@@ -11,4 +11,4 @@ except ImportError:
 def _log_api_usage_once(module: str, name: str) -> None:
     if torch.jit.is_scripting() or torch.jit.is_tracing():
         return
-    torch._C._log_api_usage_once(f"torchvision.{module}.{name}")
+    torch._C._log_api_usage_once(f"nncls.{module}.{name}")
