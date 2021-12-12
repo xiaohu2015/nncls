@@ -197,7 +197,7 @@ def stochastic_depth(input: Tensor, p: float, mode: str, training: bool = True) 
     return input * noise
 
 
-class StochasticDepth(nn.Module):
+class StochasticDepth(torch.nn.Module):
     """
     See :func:`stochastic_depth`.
     """
