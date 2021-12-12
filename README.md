@@ -2,9 +2,9 @@
 
 A simple toolbox for image classification task on top of [torchvision](https://github.com/pytorch/vision)
 
-# ⭐ Models
+##  ⭐ Models
 
-## ResNet
+### ResNet
 train:
 `
 torchrun --nproc_per_node=8 train.py --model resnet50 --batch-size 128 --lr 0.5 \
